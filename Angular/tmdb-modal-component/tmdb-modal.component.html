@@ -1,0 +1,34 @@
+<div class="overlay w-full h-full flex fixed justify-content-center align-items-center">
+    <!-- Loading modal while saving informations -->
+    <div *ngIf="loading" class="loading w-full h-full fixed"><i class="pi pi-spin pi-spinner text-7xl fixed top-50 left-50" style="color: black;"></i></div>
+   
+   <!-- choice modal -->
+    <div class="modal grid col-12 justify-content-center fixed w-10 overflow-scroll bg-white border-round-3xl">
+        <div class="text 3xl flex justify-content-between w-full p-3">
+            <p>Quel film correspond au fichier : {{selectedFilm.path}}</p>
+            <div class="tridimentionnal">
+                <input type="checkbox" id="myCheckbox" name="myCheckbox" value="checked"
+                    (change)="onChangeCheckbox($event)">
+                <label for="myCheckbox">Film 3D</label>
+            </div>
+        </div>
+        <br />
+        <div class="film-proposition grid col-11 justify-content-center border-round-3xl p-3 cursor-pointer mb-3 md:flex-row-reverse"
+            *ngFor="let proposition of results" (click)="onValidation(proposition)">
+            <strong class="text-center col-11">{{proposition.title}}</strong>
+            <div class="col-8 md:col-4">
+                <img class="film-poster w-full" [src]="'https://image.tmdb.org/t/p/w500' + proposition.poster_path">
+            </div>
+            <div class="col-12 md:col-8 text-center">
+                <p class="film-title-date">{{proposition.release_date}}</p>
+                <p class="film-overview">{{proposition.overview}}</p>
+            </div>
+        </div><br />
+
+        <div class="buttons fixed">
+            <div class="w-2"><sty-forbidden-button (click)="onCloseTmdb()"></sty-forbidden-button></div>
+            <div class="w-2" *ngIf="tagType === 2"><sty-next-button (click)="onNextFilm()"></sty-next-button></div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<div class="page w-full h-full bg-cover text-white fixed overflow-scroll">
+
+    <!-- Tmdb modal one film -->
+    <sty-tmdb-modal *ngIf="toTag" class="tmdb-modal" [selectedFilm]="selectedFilm" [tagType]="1" (closeTmdb)="onCloseTmdb($event)" ></sty-tmdb-modal>
+    
+    <!-- Tmdb modal whit film list -->
+    <div *ngIf="tagAll">
+        <div *ngFor="let film of nasFilmList; let i = index">
+            <sty-tmdb-modal
+              *ngIf="currentFilmIndex === i"
+              [selectedFilm]="film"
+              [tagType]="2"
+              (closeTmdb)="onCloseTmdb($event)"
+              (nextFilm)="onNextFilm($event)"
+            ></sty-tmdb-modal>
+          </div>
+    </div>
+
+    <!-- Film film modifications panel -->
+    <div *ngIf="selectedFilm">
+        <sty-right-panel [backColor]="'black'" class="hidden md:block">
+            <sty-film-files-modifications [selectedItem]="selectedFilm" [backColor]="'black'" 
+                (isSelectedItem)="onClosePanel($event)" (openTmdb)="onOpenTmdb($event)"></sty-film-files-modifications>
+        </sty-right-panel>
+        <sty-mobile-right-panel [backColor]="'black'" class="md:hidden">
+            <sty-film-files-modifications [selectedItem]="selectedFilm" [backColor]="'black'" 
+                (isSelectedItem)="onClosePanel($event)" (openTmdb)="onOpenTmdb($event)"></sty-film-files-modifications>
+        </sty-mobile-right-panel>
+    </div>
+    <sty-return-button class="return w-2 md:w-1 fixed" routerLink="/Films"></sty-return-button>
+    <sty-update-button class="update w-2 md:w-1 fixed" (click)="onOpenMultiTmdb(true)"></sty-update-button>
+    
+    <!-- Films list -->
+    <p class="title mt-8">Films non taggés</p>
+    <div class="panel mt-8">
+        <div *ngFor="let film of nasFilmList">
+
+            <div class="item text-center cursor-pointer" (click)="onSelectFilm(film)">
+                <p>{{film.name}}</p>
+            </div>
+
+        </div>
+    </div>
+</div>
